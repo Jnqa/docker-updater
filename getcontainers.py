@@ -21,7 +21,6 @@ class HostController:
             self.hostKey = os.environ['hostKey']
             self.hostIP = os.environ['hostIP']
             self.hostUser = os.environ['hostUser']
-            print("got it!")
         except:
             print("where is my keys?")
             from dotenv import load_dotenv
@@ -39,9 +38,9 @@ class HostController:
         containers = []
         # try:
         if True:
-            names = list(filter(None, self.run_command("docker ps --format '{{.Names}}'").split("\n")))
-            images = list(filter(None, self.run_command("docker ps --format '{{.Image}}'").split("\n")))
-            ids = list(filter(None, self.run_command("docker ps --format '{{.ID}}'").split("\n")))
+            names = list(filter(None, self.run_command("docker ps --format {{.Names}}").split("\n")))
+            images = list(filter(None, self.run_command("docker ps --format {{.Image}}").split("\n")))
+            ids = list(filter(None, self.run_command("docker ps --format {{.ID}}").split("\n")))
             # Save old containers
             if self.containers:
                 containers = self.containers
