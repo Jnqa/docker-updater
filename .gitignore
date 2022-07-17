@@ -7,3 +7,7 @@
 .idea/docker-updater.iml
 .idea/workspace.xml
 sshfile
+secrets/**
+__pycache__/getcontainers.cpython-38.pyc
+__pycache__/getfirebase.cpython-38.pyc
+__pycache__/main.cpython-38.pyc
