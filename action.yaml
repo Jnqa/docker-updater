@@ -36,12 +36,14 @@ runs:
   steps: 
     - name: Get reponame from gh #need checkout
       if: inputs.CONTAINER_NAME == ''
+      shell: bash
       run: |
        REPONAME=$(echo "${{ github.event.repository.name }}" | tr '[:upper:]' '[:lower:]')
        echo CONTAINER=${{ inputs.CONTAINER_PREFIX }}$REPONAME >> $GITHUB_ENV
 
     - name: Get reponame from gh 
       if: inputs.CONTAINER_NAME != ''
+      shell: bash
       run: echo CONTAINER=${{ inputs.CONTAINER_PREFIX }}${{ inputs.CONTAINER_NAME }} >> $GITHUB_ENV
 
     - name: Update Service on ${{ inputs.DU_HOST }} 
