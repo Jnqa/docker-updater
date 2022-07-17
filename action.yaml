@@ -1,0 +1,48 @@
+name: 'Upload to S3'
+description: ''
+inputs:
+  DU_USERNAME:
+    description: 'Username'
+    required: true
+    default: ''
+  DU_PASSWORD:
+    description: 'Password'
+    required: true
+    default: ''
+  DU_HOST:
+    description: ' https://<DU_HOST>/api/'
+    required: true
+    default: 'api.exmlp.com'
+  VERSION:
+    description: 'Container Version'
+    required: true
+    default: 'latest' 
+  CONTAINER_PREFIX:
+    description: 'like du-container_name'
+    required: false
+    default: ''
+  CONTAINER_NAME:
+    description: 'Container name'
+    required: false
+    default: ''    
+
+
+runs:
+  using: "composite"
+  steps: 
+    - name: Get reponame from gh #need checkout
+      if: inputs.CONTAINER_NAME == ''
+      run: |
+       REPONAME=$(echo "${{ github.event.repository.name }}" | tr '[:upper:]' '[:lower:]')
+       echo CONTAINER=${{ inputs.CONTAINER_PREFIX }}$REPONAME >> $GITHUB_ENV
+
+    - name: Get reponame from gh 
+      if: inputs.CONTAINER_NAME != ''
+      run: echo CONTAINER=${{ inputs.CONTAINER_PREFIX }}${{ inputs.CONTAINER_NAME }} >> $GITHUB_ENV
+
+    - name: Update Service on ${{ inputs.DU_HOST }} 
+      id: update
+      shell: bash
+      run: |
+        uri=$(curl -u ${{ inputs.DU_USERNAME }}:${{ inputs.DU_PASSWORD }} http://${{ inputs.DU_HOST }}/api/containers | jq -r '.[] | .[] | select(."name"=="${{ env.CONTAINER }}") | .uri')
+        curl -u ${{ inputs.DU_USERNAME }}:${{ inputs.DU_PASSWORD }} -i -H "Content-Type: application/json" -X PUT -d '{"version":"${{ env.VERSION }}"}' $uri
