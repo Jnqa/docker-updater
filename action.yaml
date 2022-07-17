@@ -50,5 +50,5 @@ runs:
       id: update
       shell: bash
       run: |
-        uri=$(curl -u ${{ inputs.DU_USERNAME }}:${{ inputs.DU_PASSWORD }} http://${{ inputs.DU_HOST }}/api/containers | jq -r '.[] | .[] | select(."name"=="${{ env.CONTAINER }}") | .uri')
-        curl -u ${{ inputs.DU_USERNAME }}:${{ inputs.DU_PASSWORD }} -i -H "Content-Type: application/json" -X PUT -d '{"version":"${{ env.VERSION }}"}' $uri
+        uri=$(curl -L -u ${{ inputs.DU_USERNAME }}:${{ inputs.DU_PASSWORD }} https://${{ inputs.DU_HOST }}/api/containers | jq -r '.[] | .[] | select(."name"=="${{ env.CONTAINER }}") | .uri')
+        curl -L -u ${{ inputs.DU_USERNAME }}:${{ inputs.DU_PASSWORD }} -i -H "Content-Type: application/json" -X PUT -d '{"version":"${{ env.VERSION }}"}' $uri

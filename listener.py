@@ -80,7 +80,7 @@ def make_public_task(task):
     new_task = {}
     for field in task:
         if field == 'id':
-            new_task['uri'] = url_for('get_task', task_id=task['id'], _external=True)
+            new_task['uri'] = url_for('get_task', task_id=task['id'], _scheme='https', _external=True)
         else:
             new_task[field] = task[field]
     return new_task
@@ -89,7 +89,7 @@ def make_public_container(container):
     new_container = {}
     for field in container:
         if field == 'id':
-            new_container['uri'] = url_for('get_container', container_id=container['id'], _external=True)
+            new_container['uri'] = url_for('get_container', container_id=container['id'], _scheme='https', _external=True)
         else:
             new_container[field] = container[field]
     return new_container
