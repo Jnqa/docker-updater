@@ -1,4 +1,8 @@
-name: 'Upload to S3'
+name: 'update containers'
+author: Jnqa Li
+branding:
+  icon: 'thumbs-up'
+  color: 'white'
 description: ''
 inputs:
   DU_USERNAME:
