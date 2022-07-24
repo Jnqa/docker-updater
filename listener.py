@@ -31,13 +31,16 @@ FIREBASE = getfirebase.Connect()
 users = FIREBASE.get_users_base()
 
 @app.route('/')
-@auth.login_required
+# @auth.login_required
 def index():
-    return "Hey, %s!" % auth.current_user()
+    try:
+      return "Hey, %s!" % auth.current_user()
+    except:
+      return "Auth?"
 
 
 @app.route('/api/containers', methods=['GET'])
-@auth.login_required
+# @auth.login_required
 def get_containers():
     CONTAINERS.get_containers_info()
     return jsonify({'containers': list(map(make_public_container, CONTAINERS.containers))})
