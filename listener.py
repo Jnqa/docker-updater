@@ -47,7 +47,7 @@ def get_tasks():
     return jsonify({'tasks': list(map(make_public_task, tasks))})
 
 @app.route('/api/containers/<int:container_id>', methods=['GET'])
-@auth.login_required
+# @auth.login_required
 def get_container(container_id):
     container = list(filter(lambda t: t["id"] == container_id, CONTAINERS.containers))
     if len(container) == 0:
