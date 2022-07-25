@@ -1,12 +1,14 @@
 #!flask/bin/python
 from operator import imod
 from flask import Flask, jsonify, abort, make_response, request, url_for
+from flask_cors import CORS
 import getcontainers
 import getfirebase
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
+CORS(app)
 auth = HTTPBasicAuth()
 
 # example
